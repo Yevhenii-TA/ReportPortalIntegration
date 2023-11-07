@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="MySuite">
+    <listeners>
+       <!-- <listener class-name="org.testng.reporters.EmailableReporter"/> -->
+        <!--  <listener class-name="com.example.MyListener" /> -->
+          <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+      </listeners>
+      <test name="TestReport">
+          <classes>
+              <class name="tests.TestRedirects">
+              </class>
+          </classes>
+      </test>
+  </suite>

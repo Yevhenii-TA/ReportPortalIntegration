@@ -1,0 +1,278 @@
+package tests;
+
+import base.GettingStatusCode;
+import base.TestBase;
+import com.epam.reportportal.testng.ReportPortalTestNGListener;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.Arrays;
+
+@Listeners({ReportPortalTestNGListener.class})
+public class TestRedirects extends TestBase {
+
+    @BeforeMethod(alwaysRun = true)
+    public void BrowserSetup() {
+       browserInitialization("chrome");
+    }
+
+
+    @Test(dataProvider = "list_from")
+    public void redirectCompareUrlTest(String urlFrom) throws InterruptedException {
+        int index = Arrays.asList(getData1()).indexOf(urlFrom);
+        String urlTo = listTo[index];
+        driver.get(urlFrom);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertEquals(currentUrl, urlTo, "URLs at row number " + index + 1 + " are different");
+    }
+
+    @DataProvider(name = "list_from")
+    public Object[] getData1() {
+        String[] data = {"https://ohare.parksleepfly.com/parking",
+                "https://toronto.parksleepfly.com/parking",
+                "https://seattle.parksleepfly.com/parking",
+                "https://minneapolis.parksleepfly.com/parking",
+                "https://raleighdurham.parksleepfly.com/parking",
+                "https://montreal-yul.parksleepfly.com/parking",
+                "https://detroit.parksleepfly.com/parking",
+                "https://dulles.parksleepfly.com/parking",
+                "https://bush.parksleepfly.com/parking",
+                "https://syracuse.parksleepfly.com/parking",
+                "https://boston.parksleepfly.com/parking",
+                "https://charlotte.parksleepfly.com/parking",
+                "https://stpetersburg.parksleepfly.com/parking",
+                "https://everett.parksleepfly.com/parking",
+                "https://ftlauderdale.parksleepfly.com/parking",
+                "https://sacramento.parksleepfly.com/parking",
+                "https://ontario.parksleepfly.com/parking",
+                "https://sanjose.parksleepfly.com/parking",
+                "https://greenville.parksleepfly.com/parking",
+                "https://grandrapids.parksleepfly.com/parking",
+                "https://kansascity.parksleepfly.com/parking",
+                "https://providence.parksleepfly.com/parking",
+                "https://midway.parksleepfly.com/parking",
+                "https://phoenix.parksleepfly.com/parking",
+                "https://atlanta.parksleepfly.com/parking",
+                "https://losangeles.parksleepfly.com/parking",
+                "https://saskatoon.parksleepfly.com/parking",
+                "https://oakland.parksleepfly.com/parking",
+                "https://palmsprings.parksleepfly.com/parking",
+                "https://edmonton.parksleepfly.com/parking",
+                "https://springfield.parksleepfly.com/parking",
+                "https://miami.parksleepfly.com/parking",
+                "https://calgary.parksleepfly.com/parking",
+                "https://dallas.parksleepfly.com/parking",
+                "https://cincinnati.parksleepfly.com/parking",
+                "https://portland-me.parksleepfly.com/parking",
+                "https://nashville.parksleepfly.com/parking",
+                "https://buffalo.parksleepfly.com/parking",
+                "https://portland.parksleepfly.com/parking",
+                "https://knoxville.parksleepfly.com/parking",
+                "https://omaha.parksleepfly.com/parking",
+                "https://sarasota.parksleepfly.com/parking",
+                "https://portmiami.parksleepfly.com/parking",
+                "https://newark.parksleepfly.com/parking",
+                "https://neworleans.parksleepfly.com/parking",
+                "https://sanfrancisco.parksleepfly.com/parking",
+                "https://denver.parksleepfly.com/parking",
+                "https://spokane.parksleepfly.com/parking",
+                "https://porteverglades.parksleepfly.com/parking",
+                "https://whiteplains.parksleepfly.com/parking",
+                "https://cleveland.parksleepfly.com/parking",
+                "https://anchorage.parksleepfly.com/parking",
+                "https://baltimore.parksleepfly.com/parking",
+                "https://burlington.parksleepfly.com/parking",
+                "https://sandiego.parksleepfly.com/parking",
+                "https://washingtonnational.parksleepfly.com/parking",
+                "https://indianapolis.parksleepfly.com/parking",
+                "https://desmoines.parksleepfly.com/parking",
+                "https://bradley.parksleepfly.com/parking",
+                "https://lovefield.parksleepfly.com/parking",
+                "https://lasvegas.parksleepfly.com/parking",
+                "https://stlouis.parksleepfly.com/parking",
+                "https://ottawa.parksleepfly.com/parking",
+                "https://charleston.parksleepfly.com/parking",
+                "https://columbus.parksleepfly.com/parking",
+                "https://siouxfalls.parksleepfly.com/parking",
+                "https://kennedy.parksleepfly.com/parking",
+                "https://austin.parksleepfly.com/parking",
+                "https://manchester.parksleepfly.com/parking",
+                "https://redmond.parksleepfly.com/parking",
+                "https://santaana.parksleepfly.com/parking",
+                "https://albany.parksleepfly.com/parking",
+                "https://albuquerque.parksleepfly.com/parking",
+                "https://orlando.parksleepfly.com/parking",
+                "https://sanantonio.parksleepfly.com/parking",
+                "https://chattanooga.parksleepfly.com/parking",
+                "https://jacksonville.parksleepfly.com/parking",
+                "https://laguardia.parksleepfly.com/parking",
+                "https://philadelphia.parksleepfly.com/parking",
+                "https://pittsburgh.parksleepfly.com/parking",
+                "https://ftmyers.parksleepfly.com/parking",
+                "https://tampa.parksleepfly.com/parking",
+                "https://elpaso.parksleepfly.com/parking",
+                "https://ithaca.parksleepfly.com/parking",
+                "https://reno.parksleepfly.com/parking",
+                "https://atlanticcity.parksleepfly.com/parking",
+                "https://birmingham.parksleepfly.com/parking",
+                "https://jaxport.parksleepfly.com/parking",
+                "https://freeland.parksleepfly.com/parking",
+                "https://milwaukee.parksleepfly.com/parking",
+                "https://columbia.parksleepfly.com/parking",
+                "https://roanoke.parksleepfly.com/parking",
+                "https://portofseattle.parksleepfly.com/parking",
+                "https://toledo.parksleepfly.com/parking",
+                "https://portofbaltimore.parksleepfly.com/parking",
+                "https://fargo.parksleepfly.com/parking",
+                "https://wichita.parksleepfly.com/parking",
+                "https://memphis.parksleepfly.com/parking",
+                "https://wheeling.parksleepfly.com/parking",
+                "https://richmond.parksleepfly.com/parking",
+                "https://saltlakecity.parksleepfly.com/parking",
+                "https://wichitafalls.parksleepfly.com/parking",
+                "https://porttampabay.parksleepfly.com/parking",
+                "https://tucson.parksleepfly.com/parking",
+                "https://parksleepfly.com/blog/tag/parking",
+                "https://burbank.parksleepfly.com/parking",
+                "https://capeliberty.parksleepfly.com/parking",
+                "https://dayton.parksleepfly.com/parking",
+                "https://hobby.parksleepfly.com/parking",
+                "https://portofgalveston.parksleepfly.com/parking",
+                "https://portoflosangeles.parksleepfly.com/parking",
+                "https://portcanaveral.parksleepfly.com/parking",
+                "https://portofneworleans.parksleepfly.com/parking"
+        };
+        return data;
+    }
+
+
+    public String[] listTo = {
+            "https://parksleepfly.com/ord/airport-parking",
+            "https://parksleepfly.com/yyz/airport-parking",
+            "https://parksleepfly.com/sea/airport-parking",
+            "https://parksleepfly.com/msp/airport-parking",
+            "https://parksleepfly.com/rdu/airport-parking",
+            "https://parksleepfly.com/yul/airport-parking",
+            "https://parksleepfly.com/dtw/airport-parking",
+            "https://parksleepfly.com/iad/airport-parking",
+            "https://parksleepfly.com/iah/airport-parking",
+            "https://parksleepfly.com/syr/airport-parking",
+            "https://parksleepfly.com/bos/airport-parking",
+            "https://parksleepfly.com/clt/airport-parking",
+            "https://parksleepfly.com/pie/airport-parking",
+            "https://parksleepfly.com/pae/airport-parking",
+            "https://parksleepfly.com/fll/airport-parking",
+            "https://parksleepfly.com/smf/airport-parking",
+            "https://parksleepfly.com/ont/airport-parking",
+            "https://parksleepfly.com/sjc/airport-parking",
+            "https://parksleepfly.com/gsp/airport-parking",
+            "https://parksleepfly.com/grr/airport-parking",
+            "https://parksleepfly.com/mci/airport-parking",
+            "https://parksleepfly.com/pvd/airport-parking",
+            "https://parksleepfly.com/mdw/airport-parking",
+            "https://parksleepfly.com/phx/airport-parking",
+            "https://parksleepfly.com/atl/airport-parking",
+            "https://parksleepfly.com/lax/airport-parking",
+            "https://parksleepfly.com/yxe/airport-parking",
+            "https://parksleepfly.com/oak/airport-parking",
+            "https://parksleepfly.com/psp/airport-parking",
+            "https://parksleepfly.com/yeg/airport-parking",
+            "https://parksleepfly.com/sgf/airport-parking",
+            "https://parksleepfly.com/mia/airport-parking",
+            "https://parksleepfly.com/yyc/airport-parking",
+            "https://parksleepfly.com/dfw/airport-parking",
+            "https://parksleepfly.com/cvg/airport-parking",
+            "https://parksleepfly.com/pwm/airport-parking",
+            "https://parksleepfly.com/bna/airport-parking",
+            "https://parksleepfly.com/buf/airport-parking",
+            "https://parksleepfly.com/pdx/airport-parking",
+            "https://parksleepfly.com/tys/airport-parking",
+            "https://parksleepfly.com/oma/airport-parking",
+            "https://parksleepfly.com/srq/airport-parking",
+            "https://parksleepfly.com/miz/airport-parking",
+            "https://parksleepfly.com/ewr/airport-parking",
+            "https://parksleepfly.com/msy/airport-parking",
+            "https://parksleepfly.com/sfo/airport-parking",
+            "https://parksleepfly.com/den/airport-parking",
+            "https://parksleepfly.com/geg/airport-parking",
+            "https://parksleepfly.com/flz/airport-parking",
+            "https://parksleepfly.com/hpn/airport-parking",
+            "https://parksleepfly.com/cle/airport-parking",
+            "https://parksleepfly.com/anc/airport-parking",
+            "https://parksleepfly.com/bwi/airport-parking",
+            "https://parksleepfly.com/btv/airport-parking",
+            "https://parksleepfly.com/san/airport-parking",
+            "https://parksleepfly.com/dca/airport-parking",
+            "https://parksleepfly.com/ind/airport-parking",
+            "https://parksleepfly.com/dsm/airport-parking",
+            "https://parksleepfly.com/bdl/airport-parking",
+            "https://parksleepfly.com/dal/airport-parking",
+            "https://parksleepfly.com/las/airport-parking",
+            "https://parksleepfly.com/stl/airport-parking",
+            "https://parksleepfly.com/yow/airport-parking",
+            "https://parksleepfly.com/chs/airport-parking",
+            "https://parksleepfly.com/cmh/airport-parking",
+            "https://parksleepfly.com/fsd/airport-parking",
+            "https://parksleepfly.com/jfk/airport-parking",
+            "https://parksleepfly.com/aus/airport-parking",
+            "https://parksleepfly.com/mht/airport-parking",
+            "https://parksleepfly.com/rdm/airport-parking",
+            "https://parksleepfly.com/sna/airport-parking",
+            "https://parksleepfly.com/alb/airport-parking",
+            "https://parksleepfly.com/abq/airport-parking",
+            "https://parksleepfly.com/mco/airport-parking",
+            "https://parksleepfly.com/sat/airport-parking",
+            "https://parksleepfly.com/cha/airport-parking",
+            "https://parksleepfly.com/jax/airport-parking",
+            "https://parksleepfly.com/lga/airport-parking",
+            "https://parksleepfly.com/phl/airport-parking",
+            "https://parksleepfly.com/pit/airport-parking",
+            "https://parksleepfly.com/rsw/airport-parking",
+            "https://parksleepfly.com/tpa/airport-parking",
+            "https://parksleepfly.com/elp/airport-parking",
+            "https://parksleepfly.com/ith/airport-parking",
+            "https://parksleepfly.com/rno/airport-parking",
+            "https://parksleepfly.com/acy/airport-parking",
+            "https://parksleepfly.com/bhm/airport-parking",
+            "https://parksleepfly.com/jaz/airport-parking",
+            "https://parksleepfly.com/mbs/airport-parking",
+            "https://parksleepfly.com/mke/airport-parking",
+            "https://parksleepfly.com/cae/airport-parking",
+            "https://parksleepfly.com/roa/airport-parking",
+            "https://parksleepfly.com/zea/airport-parking",
+            "https://parksleepfly.com/tol/airport-parking",
+            "https://parksleepfly.com/bwz/airport-parking",
+            "https://parksleepfly.com/far/airport-parking",
+            "https://parksleepfly.com/ict/airport-parking",
+            "https://parksleepfly.com/mem/airport-parking",
+            "https://parksleepfly.com/pwk/airport-parking",
+            "https://parksleepfly.com/ric/airport-parking",
+            "https://parksleepfly.com/slc/airport-parking",
+            "https://parksleepfly.com/sps/airport-parking",
+            "https://parksleepfly.com/tpz/airport-parking",
+            "https://parksleepfly.com/tus/airport-parking",
+            "https://parksleepfly.com/blog/tag/airport-parking",
+            "https://parksleepfly.com/bur/airport-parking",
+            "https://parksleepfly.com/clz/airport-parking",
+            "https://parksleepfly.com/day/airport-parking",
+            "https://parksleepfly.com/hou/airport-parking",
+            "https://parksleepfly.com/hoz/airport-parking",
+            "https://parksleepfly.com/laz/airport-parking",
+            "https://parksleepfly.com/mlz/airport-parking",
+            "https://parksleepfly.com/msz/airport-parking"
+};
+}
